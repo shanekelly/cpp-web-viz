@@ -1,8 +1,6 @@
 add_subdirectory(common)
 add_subdirectory(rendering)
-add_subdirectory(search)
 add_subdirectory(tests)
-add_subdirectory(world)
 
 # Create the main executable.
 add_executable(main main.cpp)
