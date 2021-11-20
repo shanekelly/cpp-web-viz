@@ -4,7 +4,7 @@
 
 #include "rendering/rendering_server.hpp"
 
-using namespace sw;
+using namespace cpp_web_viz;
 
 class MyRenderingServer : public RenderingServer
 {

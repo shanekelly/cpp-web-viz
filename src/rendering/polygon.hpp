@@ -5,7 +5,7 @@
 #include "common/common.hpp"
 #include "rendering/rgba.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 class Polygon {
  public:
@@ -26,4 +26,4 @@ class Polygon {
  */
 void to_json(nlohmann::json& json, const Polygon& polygon);
 
-}  // namespace sw
+}  // namespace cpp_web_viz

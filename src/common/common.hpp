@@ -2,7 +2,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 extern double MICROSECONDS_PER_SECOND;
 
@@ -42,4 +42,4 @@ struct Pose
   PositionInMeters position;
 };
 
-}  // namespace sw
+}  // namespace cpp_web_viz

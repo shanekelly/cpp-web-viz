@@ -4,7 +4,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 struct RGBA {
  public:
@@ -21,4 +21,4 @@ struct RGBA {
  */
 void to_json(nlohmann::json& json, const RGBA& rgba);
 
-}  // namespace sw
+}  // namespace cpp_web_viz

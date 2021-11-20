@@ -7,7 +7,7 @@
 
 #include "rendering/polygon.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 class RenderingServer {
  public:
@@ -73,4 +73,4 @@ class RenderingServer {
   std::vector<Polygon> polygons_to_render_;  // All the polygons to render.
 };
 
-}  // namespace sw
+}  // namespace cpp_web_viz

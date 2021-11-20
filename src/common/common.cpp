@@ -1,6 +1,6 @@
 #include "common/common.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 double MICROSECONDS_PER_SECOND = 1e6;
 
@@ -21,4 +21,4 @@ void to_json(nlohmann::json& json, const PositionInPixels position) {
 
 Pose::Pose(const PositionInMeters& position_) : position(position_) {}
 
-}  // namespace sw
+}  // namespace cpp_web_viz

@@ -1,6 +1,6 @@
 #include "rendering/polygon.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 Polygon::Polygon()
   : vertices({}), edge_color({0, 0, 0, 0}), fill_color({0, 0, 0, 0}) {}
@@ -23,4 +23,4 @@ void to_json(nlohmann::json& json, const Polygon& polygon) {
     {"fill_color", polygon.fill_color}};
 }
 
-}  // namespace sw
+}  // namespace cpp_web_viz

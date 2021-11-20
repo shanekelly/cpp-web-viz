@@ -6,7 +6,7 @@
 
 #include "rendering/rgba.hpp"
 
-namespace sw {
+namespace cpp_web_viz {
 
 static const int PIXELS_PER_METER = 80;
 
@@ -90,4 +90,4 @@ void RenderingServer::RenderAll() {
   SendTextToRenderingClient(message_text);
 }
 
-}  // namespace sw
+}  // namespace cpp_web_viz
