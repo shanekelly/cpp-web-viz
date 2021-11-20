@@ -4,7 +4,7 @@
 
 namespace sw {
 
-double MICROSECONDS_PER_SECOND = 1e6;
+extern double MICROSECONDS_PER_SECOND;
 
 using Hz = double;
 
