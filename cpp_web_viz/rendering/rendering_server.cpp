@@ -57,6 +57,15 @@ void RenderingServer::OnMessage(websocketpp::connection_hdl connection_handler,
 
     mouse_position_.x = set_mouse_position_message.mouse_position_x;
     mouse_position_.y = set_mouse_position_message.mouse_position_y;
+  } else if (message_type == MessageType::SetKeyboardKeyStateMessage) {
+    const SetKeyboardKeyStateMessage set_keyboard_key_state_message =
+      message_json.get<SetKeyboardKeyStateMessage>();
+
+    keyboard_state_[set_keyboard_key_state_message.key_code] =
+      set_keyboard_key_state_message.is_pressed;
+  } else {
+    std::cout << "Server received unrecognized message type \"" << message_type <<
+      "\" from the client!" << std::endl;
   }
 }
 
@@ -145,6 +154,15 @@ const int RenderingServer::GetCanvasHeight() const
 const PositionInPixels& RenderingServer::GetMousePosition() const
 {
   return mouse_position_;
+}
+
+bool RenderingServer::IsKeyPressed(const KeyCode key_code) const
+{
+  if (!keyboard_state_.contains(key_code)) {
+    return false;
+  }
+
+  return keyboard_state_.at(key_code);
 }
 
 }  // namespace cpp_web_viz

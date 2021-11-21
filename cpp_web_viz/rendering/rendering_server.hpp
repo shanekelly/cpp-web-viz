@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include <cpp_web_viz/rendering/messages.hpp>
 #include <cpp_web_viz/rendering/polygon.hpp>
 
 namespace cpp_web_viz {
@@ -66,6 +67,8 @@ class RenderingServer {
 
   const PositionInPixels& GetMousePosition() const;
 
+  bool IsKeyPressed(const KeyCode key_code) const;
+
  private:
   // The actual server.
   websocketpp::server<websocketpp::config::asio> server_;
@@ -85,6 +88,8 @@ class RenderingServer {
   int canvas_height_;
 
   PositionInPixels mouse_position_;
+
+  std::unordered_map<KeyCode, bool> keyboard_state_;
 
   // Rendering containers.
   std::vector<Polygon> polygons_to_render_;  // All the polygons to render.

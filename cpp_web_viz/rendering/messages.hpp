@@ -11,7 +11,16 @@ namespace MessageType {
   extern std::string SetCanvasSizeMessage;
   extern std::string SetRenderablesMessage;
   extern std::string SetMousePositionMessage;
+  extern std::string SetKeyboardKeyStateMessage;
 }  // namespace MessageType
+
+enum class KeyCode : uint8_t {
+  None = 0,
+  LeftArrow = 37,
+  UpArrow = 38,
+  RightArrow = 39,
+  DownArrow = 40
+};
 
 class SetCanvasSizeMessage
 {
@@ -55,5 +64,21 @@ class SetMousePositionMessage
  * @brief - Converts from JSON. See https://github.com/nlohmann/json#arbitrary-types-conversions.
  */
 void from_json(const nlohmann::json& json, SetMousePositionMessage& set_mouse_position_message);
+
+class SetKeyboardKeyStateMessage
+{
+ public:
+  SetKeyboardKeyStateMessage();
+
+  SetKeyboardKeyStateMessage(const KeyCode key_code_, const bool is_pressed_);
+
+  KeyCode key_code;
+  bool is_pressed;
+};
+
+/*
+ * @brief - Converts from JSON. See https://github.com/nlohmann/json#arbitrary-types-conversions.
+ */
+void from_json(const nlohmann::json& json, SetKeyboardKeyStateMessage& set_mouse_position_message);
 
 }  // namespace cpp_web_viz

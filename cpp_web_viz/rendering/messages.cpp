@@ -8,6 +8,7 @@ namespace MessageType {
   std::string SetCanvasSizeMessage = "SetCanvasSizeMessage";
   std::string SetRenderablesMessage = "SetRenderablesMessage";
   std::string SetMousePositionMessage = "SetMousePositionMessage";
+  std::string SetKeyboardKeyStateMessage = "SetKeyboardKeyStateMessage";
 }  // namespace MessageType
 
 SetCanvasSizeMessage::SetCanvasSizeMessage(const int canvas_width_, const int canvas_height_)
@@ -43,6 +44,22 @@ void from_json(const nlohmann::json& json, SetMousePositionMessage& set_mouse_po
 {
   json.at("message_data").at("mouse_position_x").get_to(set_mouse_position_message.mouse_position_x);
   json.at("message_data").at("mouse_position_y").get_to(set_mouse_position_message.mouse_position_y);
+}
+
+SetKeyboardKeyStateMessage::SetKeyboardKeyStateMessage()
+  : key_code(KeyCode::None), is_pressed(false)
+{
+}
+
+SetKeyboardKeyStateMessage::SetKeyboardKeyStateMessage(const KeyCode key_code_, const bool is_pressed_)
+  : key_code(key_code_), is_pressed(is_pressed_)
+{
+}
+
+void from_json(const nlohmann::json& json, SetKeyboardKeyStateMessage& set_keyboard_key_state_message)
+{
+  json.at("message_data").at("key_code").get_to(set_keyboard_key_state_message.key_code);
+  json.at("message_data").at("is_pressed").get_to(set_keyboard_key_state_message.is_pressed);
 }
 
 }  // namespace cpp_web_viz

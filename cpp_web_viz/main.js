@@ -79,8 +79,37 @@ function setup() {
           mouse_position_y: mouse_event.clientY - canvas_rect.top
         }
       };
-      let text = JSON.stringify(set_mouse_position_message);
-      web_socket.send(text);
+      let message_text = JSON.stringify(set_mouse_position_message);
+      web_socket.send(message_text);
+    }
+  };
+
+  window.onkeydown = function (key_event) {
+    if (key_event) {
+      let set_keyboard_key_state_message = {
+        message_type: "SetKeyboardKeyStateMessage",
+        message_data: {
+          key_code: key_event.keyCode,
+          is_pressed: true
+        }
+      };
+      let message_text = JSON.stringify(set_keyboard_key_state_message);
+      console.log(message_text);
+      web_socket.send(message_text);
+    }
+  };
+
+  window.onkeyup = function (key_event) {
+    if (key_event) {
+      let set_keyboard_key_state_message = {
+        message_type: "SetKeyboardKeyStateMessage",
+        message_data: {
+          key_code: key_event.keyCode,
+          is_pressed: false
+        }
+      };
+      let message_text = JSON.stringify(set_keyboard_key_state_message);
+      web_socket.send(message_text);
     }
   };
 }
