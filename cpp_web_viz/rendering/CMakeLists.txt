@@ -9,4 +9,6 @@ add_library(rendering SHARED
   rgba.cpp
 )
 
-target_link_libraries(rendering)
+target_link_libraries(rendering
+  pthread
+)

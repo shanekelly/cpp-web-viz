@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
 namespace cpp_web_viz {
 
@@ -43,5 +43,7 @@ struct Pose
 
   PositionInMeters position;
 };
+
+using TimeInSeconds = float;
 
 }  // namespace cpp_web_viz

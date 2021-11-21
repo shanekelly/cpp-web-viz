@@ -1,4 +1,4 @@
-#include "rendering/rgba.hpp"
+#include <cpp_web_viz/rendering/rgba.hpp>
 
 namespace cpp_web_viz {
 
@@ -12,5 +12,9 @@ void to_json(nlohmann::json& json, const RGBA& rgba) {
     {"b", rgba.b},
     {"a", rgba.a}};
 }
+
+namespace Color {
+   const RGBA Red{255, 0, 0, 1};
+}  // namespace color
 
 }  // namespace cpp_web_viz

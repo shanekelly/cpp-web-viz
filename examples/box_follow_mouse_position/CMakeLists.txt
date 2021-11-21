@@ -1,7 +1,3 @@
-add_subdirectory(common)
-add_subdirectory(rendering)
-add_subdirectory(tests)
-
 # Create the main executable.
 add_executable(main main.cpp)
 
@@ -9,5 +5,4 @@ add_executable(main main.cpp)
 target_link_libraries(main
   rendering
   common
-  pthread
 )

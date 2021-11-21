@@ -1,4 +1,4 @@
-#include "rendering/messages.hpp"
+#include <cpp_web_viz/rendering/messages.hpp>
 
 #include <iostream>
 

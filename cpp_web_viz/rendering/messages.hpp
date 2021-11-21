@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "rendering/polygon.hpp"
+#include <cpp_web_viz/rendering/polygon.hpp>
 
 namespace cpp_web_viz {
 

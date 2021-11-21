@@ -1,15 +1,16 @@
-#include "rendering/rendering_server.hpp"
+#include <cpp_web_viz/rendering/rendering_server.hpp>
 
 #include <iostream>
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
-#include "rendering/messages.hpp"
-#include "rendering/rgba.hpp"
+#include <cpp_web_viz/rendering/messages.hpp>
+#include <cpp_web_viz/rendering/rgba.hpp>
 
 namespace cpp_web_viz {
 
-RenderingServer::RenderingServer() {
+RenderingServer::RenderingServer()
+{
   // websocketpp::endpoint::clear_acess_channels(websocketpp::log::alevel::all);
 
   // Initialize ASIO.
@@ -24,10 +25,12 @@ RenderingServer::RenderingServer() {
     websocketpp::lib::bind(&RenderingServer::OnMessage, this, websocketpp::lib::placeholders::_1,
       websocketpp::lib::placeholders::_2));
 
+  // Disable websocketpp logging.
   server_.clear_access_channels(websocketpp::log::alevel::all);
 }
 
-void RenderingServer::OnOpen(websocketpp::connection_hdl connection_handler) {
+void RenderingServer::OnOpen(websocketpp::connection_hdl connection_handler)
+{
   client_connection_handler_ = connection_handler;
   client_connected_ = true;
 
@@ -57,7 +60,8 @@ void RenderingServer::OnMessage(websocketpp::connection_hdl connection_handler,
   }
 }
 
-void RenderingServer::SendTextToRenderingClient(const std::string& message_text) {
+void RenderingServer::SendTextToRenderingClient(const std::string& message_text)
+{
   if (client_connected_) {
     server_.send(client_connection_handler_, message_text, websocketpp::frame::opcode::value::text);
   } else {
@@ -66,12 +70,14 @@ void RenderingServer::SendTextToRenderingClient(const std::string& message_text)
 }
 
 template <class MessageType>
-void RenderingServer::SendMessageToRenderingClient(const MessageType& message) {
+void RenderingServer::SendMessageToRenderingClient(const MessageType& message)
+{
   const std::string message_text = nlohmann::json(message).dump();
   SendTextToRenderingClient(message_text);
 }
 
-void RenderingServer::WebSocketSpin() {
+void RenderingServer::WebSocketSpin()
+{
   // Listen on port 9002.
   server_.set_reuse_addr(true);
   server_.listen(9002);
@@ -87,7 +93,8 @@ void RenderingServer::WebSocketSpin() {
   }
 }
 
-void RenderingServer::UpdateSpin() {
+void RenderingServer::UpdateSpin()
+{
   while (true) {
     if (client_connected_) {
       Update();
@@ -96,7 +103,8 @@ void RenderingServer::UpdateSpin() {
   }
 }
 
-void RenderingServer::Run(const int canvas_width, const int canvas_height, const Hz& update_rate) {
+void RenderingServer::Run(const int canvas_width, const int canvas_height, const Hz& update_rate)
+{
   canvas_width_ = canvas_width;
   canvas_height_ = canvas_height;
   update_period_ = std::chrono::microseconds(std::lround(MICROSECONDS_PER_SECOND / update_rate));
@@ -108,17 +116,30 @@ void RenderingServer::Run(const int canvas_width, const int canvas_height, const
   web_socket_thread_->join();
 }
 
-void RenderingServer::ClearRendering() {
+void RenderingServer::ClearRendering()
+{
   polygons_to_render_.clear();
 }
 
-void RenderingServer::PrepareToRender(const Polygon& polygon) {
+void RenderingServer::PrepareToRenderPolygon(const Polygon& polygon)
+{
   polygons_to_render_.emplace_back(polygon);
 }
 
-void RenderingServer::RenderAll() {
+void RenderingServer::RenderAll()
+{
   SetRenderablesMessage set_renderables_message(polygons_to_render_);
   SendMessageToRenderingClient(set_renderables_message);
+}
+
+const int RenderingServer::GetCanvasWidth() const
+{
+  return canvas_width_;
+}
+
+const int RenderingServer::GetCanvasHeight() const
+{
+  return canvas_height_;
 }
 
 const PositionInPixels& RenderingServer::GetMousePosition() const

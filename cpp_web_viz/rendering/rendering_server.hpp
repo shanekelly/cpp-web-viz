@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include "rendering/polygon.hpp"
+#include <cpp_web_viz/rendering/polygon.hpp>
 
 namespace cpp_web_viz {
 
@@ -31,7 +31,7 @@ class RenderingServer {
     websocketpp::server<websocketpp::config::asio>::message_ptr message);
 
   /*
-   * @param message_text - The message to send to the web browser client.
+   * @param message_text - The text to send to the web browser client.
    */
   void SendTextToRenderingClient(const std::string& message_text);
 
@@ -52,13 +52,17 @@ class RenderingServer {
    */
   void ClearRendering();
 
-  void PrepareToRender(const Polygon& polygon);
+  void PrepareToRenderPolygon(const Polygon& polygon);
 
   /*
    * @brief - Compute the relevant rendering information from the costmap and store it in the
    * rendering containers.
    */
   void RenderAll();
+
+  const int GetCanvasWidth() const;
+
+  const int GetCanvasHeight() const;
 
   const PositionInPixels& GetMousePosition() const;
 

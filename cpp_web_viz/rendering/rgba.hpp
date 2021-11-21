@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
 namespace cpp_web_viz {
 
@@ -20,5 +20,9 @@ struct RGBA {
  * @brief - Converts to JSON. See https://github.com/nlohmann/json#arbitrary-types-conversions.
  */
 void to_json(nlohmann::json& json, const RGBA& rgba);
+
+namespace Color {
+  extern const RGBA Red;
+}  // namespace color
 
 }  // namespace cpp_web_viz

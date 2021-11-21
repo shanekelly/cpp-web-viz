@@ -1,9 +1,9 @@
 #pragma once
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
-#include "common/common.hpp"
-#include "rendering/rgba.hpp"
+#include <cpp_web_viz/common/common.hpp>
+#include <cpp_web_viz/rendering/rgba.hpp>
 
 namespace cpp_web_viz {
 

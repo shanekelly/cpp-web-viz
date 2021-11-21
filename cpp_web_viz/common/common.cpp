@@ -1,4 +1,4 @@
-#include "common/common.hpp"
+#include <cpp_web_viz/common/common.hpp>
 
 namespace cpp_web_viz {
 
