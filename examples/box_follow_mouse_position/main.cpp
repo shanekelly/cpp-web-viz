@@ -6,8 +6,8 @@
 
 using namespace cpp_web_viz;
 
-static const int CANVAS_WIDTH = 900;
-static const int CANVAS_HEIGHT = 900;
+static const int CANVAS_WIDTH = 800;
+static const int CANVAS_HEIGHT = 400;
 static const Hz UPDATE_FREQUENCY = 60;
 static const TimeInSeconds UPDATE_PERIOD = 1.0f / UPDATE_FREQUENCY;
 
