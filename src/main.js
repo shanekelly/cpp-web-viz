@@ -12,6 +12,11 @@ window.onload = function() {
  * @brief - Creates the web socket connection and defines global variables.
  */
 function setup() {
+  // Get the canvas and 2D context.
+  canvas = document.getElementById("canvas");
+
+  context = canvas.getContext("2d");
+
   // Create a web socket and connect to the specified localhost port.
   let web_socket = new WebSocket("ws://localhost:9002");
 
@@ -19,16 +24,34 @@ function setup() {
   web_socket.onmessage = function (evt) {
     // Parse the text from the received message into a JSON object.
     let message_json = JSON.parse(evt.data);
+    let message_type = message_json.message_type;
+    let message_data = message_json.message_data;
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    switch (message_type) {
+      case "SetCanvasSizeMessage":
+        let canvas_height = message_data.canvas_height;
+        let canvas_width = message_data.canvas_width;
+        canvas.setAttribute("height", canvas_height);
+        canvas.setAttribute("width", canvas_width);
 
-    // Update the array of polygons to render by calling the factory function to convert all the
-    // JSON object representations of polygons into proper Polygon class instances.
-    polygons_to_render =
-      message_json.polygons.map(polygon_json => (new Polygon()).fromJson(polygon_json));
+        break;
 
-    // Render everything to the browser screen.
-    renderAll();
+      case "SetRenderablesMessage":
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update the array of polygons to render by calling the factory function to convert all the
+        // JSON object representations of polygons into proper Polygon class instances.
+        polygons_to_render =
+          message_data.polygons_to_render.map(polygon_json => (new Polygon()).fromJson(polygon_json));
+
+        // Render everything to the browser screen.
+        renderAll();
+
+        break;
+
+      default:
+        console.log("Message type \"" + message_type + "\" not supported.");
+    }
   };
 
   // Define the callback function that is run every time the web socket connection is opened.
@@ -46,9 +69,20 @@ function setup() {
     alert(message);
   };
 
-  // Get the canvas and 2D context.
-  canvas = document.getElementById("vis");
-  context = canvas.getContext("2d");
+  canvas.onmousemove = function (mouse_event) {
+    if (mouse_event) {
+      let canvas_rect = canvas.getBoundingClientRect();
+      let set_mouse_position_message = {
+        message_type: "SetMousePositionMessage",
+        message_data: {
+          mouse_position_x: mouse_event.clientX - canvas_rect.left,
+          mouse_position_y: mouse_event.clientY - canvas_rect.top
+        }
+      };
+      let text = JSON.stringify(set_mouse_position_message);
+      web_socket.send(text);
+    }
+  };
 }
 
 /*

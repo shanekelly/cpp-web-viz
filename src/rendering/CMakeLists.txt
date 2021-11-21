@@ -1,4 +1,6 @@
 add_library(rendering SHARED
+  messages.hpp
+  messages.cpp
   polygon.hpp
   polygon.cpp
   rendering_server.hpp

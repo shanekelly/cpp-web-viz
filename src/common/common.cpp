@@ -6,6 +6,11 @@ double MICROSECONDS_PER_SECOND = 1e6;
 
 Position::Position(const float x_, const float y_) : x(x_), y(y_) {}
 
+PositionInPixels::PositionInPixels()
+  : Position(0, 0)
+{
+}
+
 PositionInPixels::PositionInPixels(const float x_, const float y_)
   : Position(x_, y_) {}
 

@@ -24,6 +24,8 @@ struct PositionInMeters : public Position
 struct PositionInPixels : public Position
 {
  public:
+  PositionInPixels();
+
   PositionInPixels(const float x_, const float y_);
 
   PositionInPixels operator+(const PositionInPixels& rhs) const;

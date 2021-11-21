@@ -27,10 +27,16 @@ class RenderingServer {
    */
   void OnClose(websocketpp::connection_hdl connection_handler);
 
+  void OnMessage(websocketpp::connection_hdl connection_handler,
+    websocketpp::server<websocketpp::config::asio>::message_ptr message);
+
   /*
    * @param message_text - The message to send to the web browser client.
    */
   void SendTextToRenderingClient(const std::string& message_text);
+
+  template <class MessageType>
+  void SendMessageToRenderingClient(const MessageType& message);
 
   void WebSocketSpin();
 
@@ -39,7 +45,7 @@ class RenderingServer {
   /*
    * @brief - The main server functionality, where it will spin to maintain web socket connections.
    */
-  void Run(const Hz& update_rate);
+  void Run(const int canvas_width, const int canvas_height, const Hz& update_rate);
 
   /*
    * @brief - Clear all the rendering containers.
@@ -53,6 +59,8 @@ class RenderingServer {
    * rendering containers.
    */
   void RenderAll();
+
+  const PositionInPixels& GetMousePosition() const;
 
  private:
   // The actual server.
@@ -68,6 +76,11 @@ class RenderingServer {
   bool client_connected_ = false;
 
   std::chrono::microseconds update_period_;
+
+  int canvas_width_;
+  int canvas_height_;
+
+  PositionInPixels mouse_position_;
 
   // Rendering containers.
   std::vector<Polygon> polygons_to_render_;  // All the polygons to render.
