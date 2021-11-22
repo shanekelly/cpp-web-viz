@@ -5,7 +5,8 @@
 
 #include <string>
 
-#include <cpp_web_viz/rendering/messages.hpp>
+#include <cpp_web_viz/messaging/key_codes.hpp>
+#include <cpp_web_viz/rendering/circle.hpp>
 #include <cpp_web_viz/rendering/polygon.hpp>
 
 namespace cpp_web_viz {

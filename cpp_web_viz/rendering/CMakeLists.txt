@@ -1,8 +1,6 @@
 add_library(rendering SHARED
   circle.hpp
   circle.cpp
-  messages.hpp
-  messages.cpp
   polygon.hpp
   polygon.cpp
   rendering_server.hpp
@@ -12,5 +10,6 @@ add_library(rendering SHARED
 )
 
 target_link_libraries(rendering
+  messaging
   pthread
 )

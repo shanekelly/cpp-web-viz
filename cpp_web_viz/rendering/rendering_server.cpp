@@ -4,7 +4,10 @@
 
 #include <nlohmann/json.hpp>
 
-#include <cpp_web_viz/rendering/messages.hpp>
+#include <cpp_web_viz/messaging/set_canvas_size_message.hpp>
+#include <cpp_web_viz/messaging/set_keyboard_key_state_message.hpp>
+#include <cpp_web_viz/messaging/set_mouse_position_message.hpp>
+#include <cpp_web_viz/messaging/set_renderables_message.hpp>
 #include <cpp_web_viz/rendering/rgba.hpp>
 
 namespace cpp_web_viz {
