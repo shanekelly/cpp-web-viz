@@ -14,7 +14,8 @@ void to_json(nlohmann::json& json, const RGBA& rgba) {
 }
 
 namespace Color {
-   const RGBA Red{255, 0, 0, 1};
+  const RGBA Blue{0, 0, 255, 1};
+  const RGBA Red{255, 0, 0, 1};
 }  // namespace color
 
 }  // namespace cpp_web_viz

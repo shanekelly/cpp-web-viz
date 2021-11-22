@@ -127,7 +127,13 @@ void RenderingServer::Run(const int canvas_width, const int canvas_height, const
 
 void RenderingServer::ClearRendering()
 {
+  circles_to_render_.clear();
   polygons_to_render_.clear();
+}
+
+void RenderingServer::PrepareToRenderCircle(const Circle& circle)
+{
+  circles_to_render_.emplace_back(circle);
 }
 
 void RenderingServer::PrepareToRenderPolygon(const Polygon& polygon)
@@ -137,7 +143,7 @@ void RenderingServer::PrepareToRenderPolygon(const Polygon& polygon)
 
 void RenderingServer::RenderAll()
 {
-  SetRenderablesMessage set_renderables_message(polygons_to_render_);
+  SetRenderablesMessage set_renderables_message(circles_to_render_, polygons_to_render_);
   SendMessageToRenderingClient(set_renderables_message);
 }
 

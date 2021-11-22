@@ -53,6 +53,8 @@ class RenderingServer {
    */
   void ClearRendering();
 
+  void PrepareToRenderCircle(const Circle& circle);
+
   void PrepareToRenderPolygon(const Polygon& polygon);
 
   /*
@@ -91,7 +93,8 @@ class RenderingServer {
 
   std::unordered_map<KeyCode, bool> keyboard_state_;
 
-  // Rendering containers.
+  // All the renderables.
+  std::vector<Circle> circles_to_render_;  // All the circles to render.
   std::vector<Polygon> polygons_to_render_;  // All the polygons to render.
 };
 

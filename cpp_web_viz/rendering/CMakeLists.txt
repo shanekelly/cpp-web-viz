@@ -1,4 +1,6 @@
 add_library(rendering SHARED
+  circle.hpp
+  circle.cpp
   messages.hpp
   messages.cpp
   polygon.hpp

@@ -22,6 +22,7 @@ struct RGBA {
 void to_json(nlohmann::json& json, const RGBA& rgba);
 
 namespace Color {
+  extern const RGBA Blue;
   extern const RGBA Red;
 }  // namespace color
 

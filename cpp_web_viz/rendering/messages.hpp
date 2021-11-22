@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include <cpp_web_viz/rendering/circle.hpp>
 #include <cpp_web_viz/rendering/polygon.hpp>
 
 namespace cpp_web_viz {
@@ -39,8 +40,10 @@ void to_json(nlohmann::json& json, const SetCanvasSizeMessage set_canvas_size_me
 class SetRenderablesMessage
 {
  public:
-  SetRenderablesMessage(const std::vector<Polygon>& polygons_to_render_);
+  SetRenderablesMessage(const std::vector<Circle>& circles_to_render_,
+    const std::vector<Polygon>& polygons_to_render_);
 
+  std::vector<Circle> circles_to_render;
   std::vector<Polygon> polygons_to_render;
 };
 

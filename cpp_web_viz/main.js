@@ -1,5 +1,6 @@
 var canvas;
 var context;
+var circles_to_render = [];  // All circles that should be rendered.
 var polygons_to_render = [];  // All polygons that should be rendered.
 
 // Define the callback function to run once the browser window is opened or when the page is
@@ -39,10 +40,12 @@ function setup() {
       case "SetRenderablesMessage":
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Update the array of polygons to render by calling the factory function to convert all the
-        // JSON object representations of polygons into proper Polygon class instances.
+        // Update the arrays of renderables by calling the factory function to convert all the JSON
+        // object representations of into proper renderable class instances.
         polygons_to_render =
           message_data.polygons_to_render.map(polygon_json => (new Polygon()).fromJson(polygon_json));
+        circles_to_render =
+          message_data.circles_to_render.map(circle_json => (new Circle()).fromJson(circle_json));
 
         // Render everything to the browser screen.
         renderAll();
@@ -94,7 +97,6 @@ function setup() {
         }
       };
       let message_text = JSON.stringify(set_keyboard_key_state_message);
-      console.log(message_text);
       web_socket.send(message_text);
     }
   };
@@ -118,6 +120,8 @@ function setup() {
  * @brief - Renders everything to the browser.
  */
 function renderAll() {
+  // Call each circle's render function.
+  circles_to_render.forEach(circle => circle.render(context));
   // Call each polygon's render function.
   polygons_to_render.forEach(polygon => polygon.render(context));
 }
