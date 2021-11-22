@@ -1,5 +1,19 @@
 # C++ Web Viz
 
+C++ Web Viz is a library that allows for making web visualizations using C++.
+
+## Table of Contents
+
+* [Setup](#setup)
+  * [Install](#install)
+  * [Build](#build)
+  * [Run](#run)
+* [Integrating Into Other Projects](#integrating-into-other-projects)
+  * [Integration Instructions](#integration-instructions)
+  * [Examples](#examples)
+    * [Box Follow Mouse Position](#box-follow-mouse-position)
+    * [Disk Arrow Key Movement](#disk-arrow-key-movement)
+
 ## Setup
 
 ### Install
@@ -46,9 +60,36 @@
   file can be drag-and-dropped into your web browser instead of being opened from the terminal.
 
 
-## Examples
+## Integrating Into Other Projects
 
-### Box Follow Mouse Position
+## Integration Instructions
+
+Using C++ Web Viz in other projects is simple. Here is a minimal fully-functioning example:
+
+  ```cpp
+  #include <cpp_web_viz/rendering/rendering_server.hpp>
+
+  class MyRenderingServer : public RenderingServer {
+    // Runs once at startup.
+    void SetUp() override {
+    }
+
+    // Runs every frame.
+    void Update() override {
+    }
+  };
+
+  int main() {
+    cpp_web_viz::MyRenderingServer rendering_server;
+    rendering_server.Run(720, 480, 60);  // width, height, update frequency
+
+    return 0;
+  }
+  ```
+
+### Examples
+
+#### Box Follow Mouse Position
 
 A red square follows the mouse cursor around the screen and has its position clipped to the edges of
 the screen.
@@ -57,7 +98,7 @@ the screen.
 
 ![](examples/box_follow_mouse_position/box_follow_mouse_position.gif)
 
-### Disk Arrow Key Movement
+#### Disk Arrow Key Movement
 
 A blue disk moves across the screen according to which arrow keys are pressed and has its position
 clipped to the edges of the screen.

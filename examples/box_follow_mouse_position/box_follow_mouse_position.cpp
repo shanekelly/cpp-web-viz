@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include <websocketpp/common/thread.hpp>
-
 #include <cpp_web_viz/rendering/rendering_server.hpp>
 
 using namespace cpp_web_viz;
