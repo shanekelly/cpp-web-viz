@@ -69,7 +69,7 @@ Using C++ Web Viz in other projects is simple. Here is a minimal fully-functioni
   ```cpp
   #include <cpp_web_viz/rendering/rendering_server.hpp>
 
-  class MyRenderingServer : public RenderingServer {
+  class MyRenderingServer : public cpp_web_viz::RenderingServer {
     // Runs once at startup.
     void SetUp() override {
     }
@@ -80,7 +80,7 @@ Using C++ Web Viz in other projects is simple. Here is a minimal fully-functioni
   };
 
   int main() {
-    cpp_web_viz::MyRenderingServer rendering_server;
+    MyRenderingServer rendering_server;
     rendering_server.Run(720, 480, 60);  // width, height, update frequency
 
     return 0;
