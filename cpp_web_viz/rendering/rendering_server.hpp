@@ -15,9 +15,9 @@ class RenderingServer {
  public:
   RenderingServer();
 
-  virtual void SetUp() = 0;
+  virtual void SetUp();
 
-  virtual void Update() = 0;
+  virtual void Update();
 
   /*
    * @brief - The callback function to call when the web socket connection is opened.
@@ -31,6 +31,8 @@ class RenderingServer {
 
   void OnMessage(websocketpp::connection_hdl connection_handler,
     websocketpp::server<websocketpp::config::asio>::message_ptr message);
+
+  void InternalUpdate();
 
   /*
    * @param message_text - The text to send to the web browser client.
@@ -85,10 +87,14 @@ class RenderingServer {
   // Whether or not the client has been connected yet.
   bool client_connected_ = false;
 
-  std::chrono::microseconds update_period_;
+  std::chrono::nanoseconds update_period_;
 
   int canvas_width_;
   int canvas_height_;
+
+  std::chrono::nanoseconds ping_period_;
+
+  std::chrono::nanoseconds last_ping_sent_timestamp_;
 
   PositionInPixels mouse_position_;
 

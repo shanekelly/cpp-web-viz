@@ -2,7 +2,8 @@
 
 namespace cpp_web_viz {
 
-double MICROSECONDS_PER_SECOND = 1e6;
+double NANOSECONDS_PER_SECOND = 1e9;
+double NANOSECONDS_PER_MILLISECOND = 1e6;
 
 Position::Position(const float x_, const float y_) : x(x_), y(y_) {}
 

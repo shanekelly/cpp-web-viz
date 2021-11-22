@@ -4,6 +4,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include <cpp_web_viz/messaging/ping_message.hpp>
 #include <cpp_web_viz/messaging/set_canvas_size_message.hpp>
 #include <cpp_web_viz/messaging/set_keyboard_key_state_message.hpp>
 #include <cpp_web_viz/messaging/set_mouse_position_message.hpp>
@@ -14,7 +15,8 @@ namespace cpp_web_viz {
 
 RenderingServer::RenderingServer()
 {
-  // websocketpp::endpoint::clear_acess_channels(websocketpp::log::alevel::all);
+  ping_period_ = std::chrono::nanoseconds(std::lround(NANOSECONDS_PER_SECOND * 1.0));
+  last_ping_sent_timestamp_ = std::chrono::nanoseconds(0);
 
   // Initialize ASIO.
   server_.init_asio();
@@ -30,6 +32,14 @@ RenderingServer::RenderingServer()
 
   // Disable websocketpp logging.
   server_.clear_access_channels(websocketpp::log::alevel::all);
+}
+
+void RenderingServer::SetUp()
+{
+}
+
+void RenderingServer::Update()
+{
 }
 
 void RenderingServer::OnOpen(websocketpp::connection_hdl connection_handler)
@@ -66,9 +76,31 @@ void RenderingServer::OnMessage(websocketpp::connection_hdl connection_handler,
 
     keyboard_state_[set_keyboard_key_state_message.key_code] =
       set_keyboard_key_state_message.is_pressed;
+  } else if (message_type == MessageType::PingMessage) {
+    const PingMessage ping_message = message_json.get<PingMessage>();
+    const std::chrono::nanoseconds now_timestamp =
+      std::chrono::high_resolution_clock::now().time_since_epoch();
+    const std::chrono::nanoseconds roundtrip_ping_time =
+      now_timestamp - ping_message.sent_timestamp;
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "Ping: " << roundtrip_ping_time.count() / NANOSECONDS_PER_MILLISECOND << " ms"
+      << std::endl;
   } else {
     std::cout << "Server received unrecognized message type \"" << message_type <<
       "\" from the client!" << std::endl;
+  }
+}
+
+void RenderingServer::InternalUpdate()
+{
+  const std::chrono::nanoseconds now_timestamp =
+    std::chrono::high_resolution_clock::now().time_since_epoch();
+  const std::chrono::nanoseconds time_since_last_ping_sent =
+    now_timestamp - last_ping_sent_timestamp_;
+  if (time_since_last_ping_sent > ping_period_) {
+    const PingMessage ping_message(now_timestamp);
+    SendMessageToRenderingClient(ping_message);
+    last_ping_sent_timestamp_ = now_timestamp;
   }
 }
 
@@ -109,6 +141,7 @@ void RenderingServer::UpdateSpin()
 {
   while (true) {
     if (client_connected_) {
+      InternalUpdate();
       Update();
     }
     std::this_thread::sleep_for(update_period_);
@@ -119,7 +152,7 @@ void RenderingServer::Run(const int canvas_width, const int canvas_height, const
 {
   canvas_width_ = canvas_width;
   canvas_height_ = canvas_height;
-  update_period_ = std::chrono::microseconds(std::lround(MICROSECONDS_PER_SECOND / update_rate));
+  update_period_ = std::chrono::nanoseconds(std::lround(NANOSECONDS_PER_SECOND / update_rate));
 
   web_socket_thread_ = std::make_unique<std::thread>(&RenderingServer::WebSocketSpin, this);
   update_spin_thread_ = std::make_unique<std::thread>(&RenderingServer::UpdateSpin, this);

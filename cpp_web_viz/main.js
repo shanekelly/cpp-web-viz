@@ -22,9 +22,10 @@ function setup() {
   let web_socket = new WebSocket("ws://localhost:9002");
 
   // Define the callback function that is run every time a message is received over the web socket.
-  web_socket.onmessage = function (evt) {
+  web_socket.onmessage = function (message_event) {
+    let message_text = message_event.data;
     // Parse the text from the received message into a JSON object.
-    let message_json = JSON.parse(evt.data);
+    let message_json = JSON.parse(message_text);
     let message_type = message_json.message_type;
     let message_data = message_json.message_data;
 
@@ -49,6 +50,11 @@ function setup() {
 
         // Render everything to the browser screen.
         renderAll();
+
+        break;
+
+      case "PingMessage":
+        web_socket.send(message_text);
 
         break;
 

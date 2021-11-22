@@ -1,5 +1,7 @@
 add_library(messaging SHARED
   key_codes.hpp
+  ping_message.hpp
+  ping_message.cpp
   set_canvas_size_message.hpp
   set_canvas_size_message.cpp
   set_keyboard_key_state_message.hpp

@@ -4,7 +4,8 @@
 
 namespace cpp_web_viz {
 
-extern double MICROSECONDS_PER_SECOND;
+extern double NANOSECONDS_PER_SECOND;
+extern double NANOSECONDS_PER_MILLISECOND;
 
 using Hz = double;
 
