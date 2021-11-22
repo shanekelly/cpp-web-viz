@@ -56,3 +56,12 @@ the screen.
 [Link to code.](examples/box_follow_mouse_position)
 
 ![](examples/box_follow_mouse_position/box_follow_mouse_position.gif)
+
+### Disk Arrow Key Movement
+
+A blue disk moves across the screen according to which arrow keys are pressed and has its position
+clipped to the edges of the screen.
+
+[Link to code.](examples/disk_arrow_key_movement)
+
+![](examples/disk_arrow_key_movement/disk_arrow_key_movement.gif)
