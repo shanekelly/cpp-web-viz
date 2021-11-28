@@ -30,11 +30,22 @@ function setup() {
     let message_data = message_json.message_data;
 
     switch (message_type) {
+      case "PingMessage":
+        web_socket.send(message_text);
+
+        break;
+
       case "SetCanvasSizeMessage":
         let canvas_height = message_data.canvas_height;
         let canvas_width = message_data.canvas_width;
         canvas.setAttribute("height", canvas_height);
         canvas.setAttribute("width", canvas_width);
+
+        break;
+
+      case "SetFpsMessage":
+        let fps = message_data.frames_per_second;
+        document.getElementById("fps").innerHTML = fps;
 
         break;
 
@@ -50,11 +61,6 @@ function setup() {
 
         // Render everything to the browser screen.
         renderAll();
-
-        break;
-
-      case "PingMessage":
-        web_socket.send(message_text);
 
         break;
 

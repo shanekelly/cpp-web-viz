@@ -6,6 +6,7 @@
 
 #include <cpp_web_viz/messaging/ping_message.hpp>
 #include <cpp_web_viz/messaging/set_canvas_size_message.hpp>
+#include <cpp_web_viz/messaging/set_fps_message.hpp>
 #include <cpp_web_viz/messaging/set_keyboard_key_state_message.hpp>
 #include <cpp_web_viz/messaging/set_mouse_position_message.hpp>
 #include <cpp_web_viz/messaging/set_renderables_message.hpp>
@@ -49,6 +50,9 @@ void RenderingServer::OnOpen(websocketpp::connection_hdl connection_handler)
 
   SetCanvasSizeMessage set_canvas_size_message(canvas_width_, canvas_height_);
   SendMessageToRenderingClient(set_canvas_size_message);
+
+  SetFpsMessage set_fps_message(update_frequency_);
+  SendMessageToRenderingClient(set_fps_message);
 
   SetUp();
 }
@@ -148,11 +152,12 @@ void RenderingServer::UpdateSpin()
   }
 }
 
-void RenderingServer::Run(const int canvas_width, const int canvas_height, const Hz& update_rate)
+void RenderingServer::Run(const int canvas_width, const int canvas_height, const Hz& update_frequency)
 {
   canvas_width_ = canvas_width;
   canvas_height_ = canvas_height;
-  update_period_ = std::chrono::nanoseconds(std::lround(NANOSECONDS_PER_SECOND / update_rate));
+  update_frequency_ = update_frequency;
+  update_period_ = std::chrono::nanoseconds(std::lround(NANOSECONDS_PER_SECOND / update_frequency));
 
   web_socket_thread_ = std::make_unique<std::thread>(&RenderingServer::WebSocketSpin, this);
   update_spin_thread_ = std::make_unique<std::thread>(&RenderingServer::UpdateSpin, this);

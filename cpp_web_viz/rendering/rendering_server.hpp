@@ -49,7 +49,7 @@ class RenderingServer {
   /*
    * @brief - The main server functionality, where it will spin to maintain web socket connections.
    */
-  void Run(const int canvas_width, const int canvas_height, const Hz& update_rate);
+  void Run(const int canvas_width, const int canvas_height, const Hz& update_frequency);
 
   /*
    * @brief - Clear all the rendering containers.
@@ -87,7 +87,8 @@ class RenderingServer {
   // Whether or not the client has been connected yet.
   bool client_connected_ = false;
 
-  std::chrono::nanoseconds update_period_;
+  Hz update_frequency_;  // Frames per second.
+  std::chrono::nanoseconds update_period_;  // Nanoseconds per frame.
 
   int canvas_width_;
   int canvas_height_;
