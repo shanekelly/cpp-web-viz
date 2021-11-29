@@ -9,6 +9,10 @@ extern double NANOSECONDS_PER_MILLISECOND;
 
 using Hz = float;
 
+using TimeInSeconds = float;
+
+using TimeInMilliseconds = float;
+
 struct Position
 {
  public:
@@ -44,7 +48,5 @@ struct Pose
 
   PositionInMeters position;
 };
-
-using TimeInSeconds = float;
 
 }  // namespace cpp_web_viz

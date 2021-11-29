@@ -9,6 +9,7 @@
 #include <cpp_web_viz/messaging/set_fps_message.hpp>
 #include <cpp_web_viz/messaging/set_keyboard_key_state_message.hpp>
 #include <cpp_web_viz/messaging/set_mouse_position_message.hpp>
+#include <cpp_web_viz/messaging/set_ping_message.hpp>
 #include <cpp_web_viz/messaging/set_renderables_message.hpp>
 #include <cpp_web_viz/rendering/rgba.hpp>
 
@@ -74,21 +75,25 @@ void RenderingServer::OnMessage(websocketpp::connection_hdl connection_handler,
 
     mouse_position_.x = set_mouse_position_message.mouse_position_x;
     mouse_position_.y = set_mouse_position_message.mouse_position_y;
+
   } else if (message_type == MessageType::SetKeyboardKeyStateMessage) {
     const SetKeyboardKeyStateMessage set_keyboard_key_state_message =
       message_json.get<SetKeyboardKeyStateMessage>();
 
     keyboard_state_[set_keyboard_key_state_message.key_code] =
       set_keyboard_key_state_message.is_pressed;
+
   } else if (message_type == MessageType::PingMessage) {
     const PingMessage ping_message = message_json.get<PingMessage>();
     const std::chrono::nanoseconds now_timestamp =
       std::chrono::high_resolution_clock::now().time_since_epoch();
     const std::chrono::nanoseconds roundtrip_ping_time =
       now_timestamp - ping_message.sent_timestamp;
-    std::cout << std::fixed << std::setprecision(1);
-    std::cout << "Ping: " << roundtrip_ping_time.count() / NANOSECONDS_PER_MILLISECOND << " ms"
-      << std::endl;
+    most_recent_ping_ = roundtrip_ping_time.count() / NANOSECONDS_PER_MILLISECOND;
+
+    SetPingMessage set_ping_message(most_recent_ping_);
+    SendMessageToRenderingClient(set_ping_message);
+
   } else {
     std::cout << "Server received unrecognized message type \"" << message_type <<
       "\" from the client!" << std::endl;

@@ -88,14 +88,16 @@ class RenderingServer {
   bool client_connected_ = false;
 
   Hz update_frequency_;  // Frames per second.
-  std::chrono::nanoseconds update_period_;  // Nanoseconds per frame.
+  std::chrono::nanoseconds update_period_;  // Nanoseconds between updates.
 
   int canvas_width_;
   int canvas_height_;
 
-  std::chrono::nanoseconds ping_period_;
+  std::chrono::nanoseconds ping_period_;  // Nanoseconds between pings.
 
   std::chrono::nanoseconds last_ping_sent_timestamp_;
+
+  TimeInMilliseconds most_recent_ping_;
 
   PositionInPixels mouse_position_;
 

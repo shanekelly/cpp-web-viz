@@ -10,6 +10,8 @@ add_library(messaging SHARED
   set_keyboard_key_state_message.cpp
   set_mouse_position_message.hpp
   set_mouse_position_message.cpp
+  set_ping_message.hpp
+  set_ping_message.cpp
   set_renderables_message.hpp
   set_renderables_message.cpp
 )

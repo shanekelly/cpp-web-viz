@@ -7,10 +7,16 @@
     <script src="rendering/circle.js"></script>
     <script src="rendering/polygon.js"></script>
     <script src="main.js"></script>
+    <style>
+      p {
+        float: left;
+      }
+    </style>
   </head>
   <body>
     <canvas id="canvas" style="border:1px solid #000000;"></canvas>
-    <p style="font-size:12px; margin:0px;">Server-Side FPS: <span id="fps">Unknown</span></p>
-    <p style="font-size:12px; margin:0px;">Ping:<span id="ping">Unknown</span></p>
+    <br>
+    <p style="font-size:12px; margin:0px; width:160px;"><b>Server-Side FPS:</b> <span id="fps">Unknown</span></p>
+    <p style="font-size:12px; margin:0px;"><b>Ping:</b> <span id="ping">Unknown</span> ms</p>
   </body>
 </html>

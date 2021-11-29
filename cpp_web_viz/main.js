@@ -49,6 +49,12 @@ function setup() {
 
         break;
 
+      case "SetPingMessage":
+        let ping = message_data.ping;
+        document.getElementById("ping").innerHTML = ping.toFixed(1);
+
+        break;
+
       case "SetRenderablesMessage":
         context.clearRect(0, 0, canvas.width, canvas.height);
 
